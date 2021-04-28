@@ -11,68 +11,56 @@ import {
 	CardTitle,
 	CardSubtitle,
 } from "reactstrap";
-import CardDisplay from "../Card";
+import "./styles.css";
 
 function Admin() {
 	const [gatelog, setGatelog] = useState([]);
 
-	const fetchLogs = async () => {
-		const response = db.collection("gatelog");
-		const data = await response.get();
-		data.docs.forEach((item) => {
-			setGatelog([...gatelog, item.data()]);
-		});
-	};
-
 	useEffect(() => {
-		fetchLogs();
+		db.collection("gatelog").onSnapshot(
+			(snapshot) => {
+				setGatelog(snapshot.docs.map((doc) => doc.data()));
+			},
+			(error) => {
+				console.log(error);
+			}
+		);
 	}, []);
 
-	const peopleCards = () => {
-		gatelog.map((person) => {
-			return (
-				<Col sm="4">
-					<CardDisplay
-						name={person.name}
-						date={person.date}
-						entrytime={person.entrytime}
-						exittime={person.exittime}
-						reason={person.reason}
-						person={person.person}
-					/>
-				</Col>
-			);
-		});
-	};
-
 	return (
-		<div>
+		<div className="background">
 			<AdminHeader />
-
-			{gatelog.map(
-				({ name, date, entrytime, exittime, person, reason }) => (
+			<div className="cards">
+				{gatelog.map((person) => (
 					<Container fluid>
 						<Row>
-							<Col sm="2">
-								<Card>
+							<Col sm="10">
+								<Card
+									style={{
+										borderColor: "#333",
+									}}
+								>
 									<CardBody>
-										<CardTitle>{name}</CardTitle>
-										<CardSubtitle>{date}</CardSubtitle>
-										<CardText>{person}</CardText>
+										<CardTitle>{person.name}</CardTitle>
+										<CardSubtitle>
+											{person.date}
+										</CardSubtitle>
+										<CardText>{person.person}</CardText>
 									</CardBody>
 									<CardBody>
-										<CardTitle>{reason}</CardTitle>
+										<CardTitle>{person.reason}</CardTitle>
 
 										<CardText>
-											{entrytime}-{exittime}
+											{person.entrytime}-{person.exittime}
 										</CardText>
 									</CardBody>
 								</Card>
+								<br />
 							</Col>
 						</Row>
 					</Container>
-				)
-			)}
+				))}
+			</div>
 		</div>
 	);
 }

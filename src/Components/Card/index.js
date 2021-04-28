@@ -5,20 +5,18 @@ function CardDisplay(name, date, entrytime, exittime, reason, person) {
 	return (
 		<div>
 			<Card>
-				<Card>
-					<CardBody>
-						<CardTitle>{name}</CardTitle>
-						<CardSubtitle>{date}</CardSubtitle>
-						<CardText>{person}</CardText>
-					</CardBody>
-					<CardBody>
-						<CardTitle>{reason}</CardTitle>
+				<CardBody>
+					<CardTitle>{name}</CardTitle>
+					<CardSubtitle>{date}</CardSubtitle>
+					<CardText>{person}</CardText>
+				</CardBody>
+				<CardBody>
+					<CardTitle>{reason}</CardTitle>
 
-						<CardText>
-							{entrytime}-{exittime}
-						</CardText>
-					</CardBody>
-				</Card>
+					<CardText>
+						{entrytime}-{exittime}
+					</CardText>
+				</CardBody>
 			</Card>
 		</div>
 	);

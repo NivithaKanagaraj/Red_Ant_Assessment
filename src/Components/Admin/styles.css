@@ -1,0 +1,10 @@
+.cards {
+	display: flex;
+	padding: 10px;
+	padding-bottom: 10px;
+	display: "flex";
+	flex-direction: "row";
+	flex-wrap: "wrap";
+	margin: auto;
+	flex-flow: row wrap;
+}
